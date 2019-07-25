@@ -1,0 +1,14 @@
+{
+  "description": "Points",
+  "display": "fullscreen",
+  "icons": [
+    {
+      "src": "icons/xxxhdpi.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ],
+  "name": "Points",
+  "short_name": "Points",
+  "start_url": "index.html"
+}
