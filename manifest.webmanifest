@@ -1,6 +1,6 @@
 {
   "description": "Points",
-  "display": "fullscreen",
+  "display": "standalone",
   "icons": [
     {
       "src": "icons/xxxhdpi.png",
