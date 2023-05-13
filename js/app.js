@@ -4,7 +4,6 @@ var device = Framework7.getDevice();
 var app = new Framework7({
   name: 'Points', // App name
   theme: 'md', // Automatic theme detection
-  mdSwipeBack: true,
 
   darkMode: true,
   el: '#app', // App root element
@@ -16,6 +15,9 @@ var app = new Framework7({
   // Register service worker
   serviceWorker: {
     path: '/service-worker.js',
+  },
+  view: {
+    mdSwipeBack: true
   },
 
 
