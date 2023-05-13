@@ -1,8 +1,8 @@
 var $ = Dom7;
 
-var device = Framework7.getDevice();
+
 var app = new Framework7({
-  name: 'Points', // App name
+  name: 'Test', // App name
   theme: 'auto', // Automatic theme detection
 
   darkMode: true,
@@ -15,27 +15,6 @@ var app = new Framework7({
   // Register service worker
   serviceWorker: {
     path: '/service-worker.js',
-  },
-
-
-  // Input settings
-  input: {
-    scrollIntoViewOnFocus: device.cordova,
-    scrollIntoViewCentered: device.cordova,
-  },
-  // Cordova Statusbar settings
-  statusbar: {
-    iosOverlaysWebView: true,
-    androidOverlaysWebView: false,
-  },
-  on: {
-    init: function () {
-      var f7 = this;
-      if (f7.device.cordova) {
-        // Init cordova APIs (see cordova-app.js)
-        cordovaApp.init(f7);
-      }
-    },
   },
 });
 // Login Screen Demo

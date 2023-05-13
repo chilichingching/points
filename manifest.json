@@ -1,7 +1,7 @@
 {
-  "name": "Points",
-  "short_name": "Points",
-  "description": "Points",
+  "name": "Test",
+  "short_name": "Test",
+  "description": "Test",
   "lang": "en-US",
   "start_url": "/",
   "display": "standalone",
