@@ -30,10 +30,10 @@ self.__WB_MANIFEST = [
     revision: '1',
     url: 'js/store.js'
   },
-  {
-    revision: '1',
-    url: 'js/app.js'
-  },
+  // {
+  //   revision: '1',
+  //   url: 'js/app.js'
+  // },
   // Fonts
   {
     revision: '1',

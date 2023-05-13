@@ -3,7 +3,8 @@ var $ = Dom7;
 var device = Framework7.getDevice();
 var app = new Framework7({
   name: 'Points', // App name
-  theme: 'auto', // Automatic theme detection
+  theme: 'md', // Automatic theme detection
+  mdSwipeBack: true,
 
   darkMode: true,
   el: '#app', // App root element
@@ -48,4 +49,20 @@ $('#my-login-screen .login-button').on('click', function () {
 
   // Alert username and password
   app.dialog.alert('Username: ' + username + '<br/>Password: ' + password);
+});
+
+var sheetSwipeToStep = app.sheet.create({
+  el: '.demo-sheet-swipe-to-step',
+  swipeToClose: true,
+  swipeToStep: true,
+  push: true,
+  backdrop: true,
+});
+
+$('#test-btn').on('click', function () {
+  sheetSwipeToStep.open();
+});
+
+app.router.on("swipebackMove", function(data) {
+  console.log(data);
 });

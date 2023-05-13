@@ -76,7 +76,7 @@
                 <i class="icon material-icons if-md">menu</i>
               </a>
             </div>
-            <div class="title sliding">Points123</div>
+            <div class="title sliding">Points</div>
             <div class="right">
               <a href="#" class="link icon-only panel-open" data-panel="right">
                 <i class="icon f7-icons if-not-md">menu</i>
@@ -84,7 +84,7 @@
               </a>
             </div>
             <div class="title-large">
-              <div class="title-large-text">Points123</div>
+              <div class="title-large-text">Points</div>
             </div>
           </div>
         </div>
@@ -114,6 +114,13 @@
                 <a href="/form/" class="item-content item-link">
                   <div class="item-inner">
                     <div class="item-title">Form</div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="item-content item-link" id="test-btn">
+                  <div class="item-inner">
+                    <div class="item-title">Test</div>
                   </div>
                 </a>
               </li>
@@ -213,6 +220,46 @@
         </div>
       </div>
     </div>
+
+    <div class="sheet-modal demo-sheet-swipe-to-step" style="height:auto">
+      <div class="sheet-modal-inner">
+        <div class="swipe-handler" @click=${toggleSwipeStep}></div>
+        <div class="sheet-modal-swipe-step">
+          <div class="display-flex padding justify-content-space-between align-items-center">
+            <div style="font-size: 18px"><b>Total:</b></div>
+            <div style="font-size: 22px"><b>$500</b></div>
+          </div>
+          <div class="padding-horizontal padding-bottom">
+            <a class="button button-large button-fill">Make Payment</a>
+            <div class="margin-top text-align-center">Swipe up for more details</div>
+          </div>
+        </div>
+        <div class="block-title block-title-medium margin-top">Your order:</div>
+        <div class="list no-hairlines">
+          <ul>
+            <li class="item-content">
+              <div class="item-inner">
+                <div class="item-title">Item 1</div>
+                <div class="item-after"><b>$200</b></div>
+              </div>
+            </li>
+            <li class="item-content">
+              <div class="item-inner">
+                <div class="item-title">Item 2</div>
+                <div class="item-after"><b>$180</b></div>
+              </div>
+            </li>
+            <li class="item-content">
+              <div class="item-inner">
+                <div class="item-title">Delivery</div>
+                <div class="item-after"><b>$120</b></div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
   </div>
   <!-- CORDOVA_PLACEHOLDER_DONT_REMOVE -->
   <!-- Framework7 library -->
