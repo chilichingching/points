@@ -64,7 +64,7 @@ var sheetSwipeToStep = app.sheet.create({
 $('#test-btn').on('click', function () {
   sheetSwipeToStep.open();
   
-  alert(1);
+  alert(2);
 });
 
 // app.router.on("swipebackMove", function(data) {
