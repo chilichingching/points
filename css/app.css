@@ -4,3 +4,26 @@
 }
 
 /* Your app custom styles here */
+
+.swipe-handler {
+  height: 20px;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  top: 0;
+  cursor: pointer;
+  z-index: 10
+}
+
+.swipe-handler:after {
+  content: '';
+  width: 40px;
+  height: 5px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -20px;
+  margin-top: 3px;
+  border-radius: 3px;
+  background: #666
+}

@@ -38,33 +38,17 @@ var app = new Framework7({
         // Init cordova APIs (see cordova-app.js)
         cordovaApp.init(f7);
       }
+      
+      more_options_modal = f7.sheet.create({
+        el: '.more-options-modal',
+        swipeToClose: true,
+        swipeToStep: true,
+        push: true,
+        backdrop: true
+      });
+
     },
   },
-});
-// Login Screen Demo
-$('#my-login-screen .login-button').on('click', function () {
-  var username = $('#my-login-screen [name="username"]').val();
-  var password = $('#my-login-screen [name="password"]').val();
-
-  // Close login screen
-  app.loginScreen.close('#my-login-screen');
-
-  // Alert username and password
-  app.dialog.alert('Username: ' + username + '<br/>Password: ' + password);
-});
-
-var sheetSwipeToStep = app.sheet.create({
-  el: '.demo-sheet-swipe-to-step',
-  swipeToClose: true,
-  swipeToStep: true,
-  push: true,
-  backdrop: true,
-});
-
-$('#test-btn').on('click', function () {
-  sheetSwipeToStep.open();
-  
-  alert(2);
 });
 
 // app.router.on("swipebackMove", function(data) {

@@ -30,125 +30,73 @@
 </head>
 <body>
   <div id="app">
-    <!-- Left panel with cover effect-->
-    <div class="panel panel-left panel-cover dark panel-init">
-      <div class="view">
-        <div class="page">
-          <div class="navbar">
-            <div class="navbar-bg"></div>
-            <div class="navbar-inner">
-              <div class="title">Left Panel</div>
-            </div>
-          </div>
-          <div class="page-content">
-            <div class="block">Left panel content goes here</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Right panel with reveal effect-->
-    <div class="panel panel-right panel-reveal dark">
-      <div class="view">
-        <div class="page">
-          <div class="navbar">
-            <div class="navbar-bg"></div>
-            <div class="navbar-inner">
-              <div class="title">Right Panel</div>
-            </div>
-          </div>
-          <div class="page-content">
-            <div class="block">Right panel content goes here</div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
-    <!-- Your main view, should have "view-main" class -->
     <div class="view view-main view-init safe-areas">
       <div class="page" data-name="home">
-        <!-- Top Navbar -->
-        <div class="navbar navbar-large">
+        <div class="navbar">
           <div class="navbar-bg"></div>
           <div class="navbar-inner">
-            <div class="left">
-              <a href="#" class="link icon-only panel-open" data-panel="left">
-                <i class="icon f7-icons if-not-md">menu</i>
-                <i class="icon material-icons if-md">menu</i>
-              </a>
-            </div>
-            <div class="title sliding">Points</div>
+            <div class="title">Points</div>
             <div class="right">
-              <a href="#" class="link icon-only panel-open" data-panel="right">
-                <i class="icon f7-icons if-not-md">menu</i>
-                <i class="icon material-icons if-md">menu</i>
+              <a class="link icon-only ripple-inset sheet-open" data-sheet=".more-options-modal">
+                <i class="icon material-icons">more_vert</i>
               </a>
             </div>
-            <div class="title-large">
-              <div class="title-large-text">Points</div>
-            </div>
           </div>
         </div>
-        <!-- Toolbar-->
-        <div class="toolbar toolbar-bottom">
-          <div class="toolbar-inner">
-            <a href="#" class="link">Left Link</a>
-            <a href="#" class="link">Right Link</a>
-          </div>
+        <div class="fab fab-extended fab-left-bottom">
+          <a>
+            <i class="icon material-icons">add</i>
+            <div class="fab-text">Add Player</div>
+          </a>
         </div>
-        <!-- Scrollable page content-->
+        <div class="fab fab-extended fab-right-bottom disabled">
+          <a>
+            <i class="icon material-icons">done</i>
+            <div class="fab-text">Start Game</div>
+          </a>
+        </div>
         <div class="page-content">
-          <div class="block">
-            <p>Here is your blank Framework7 app. Let's see what we have here.</p>
-          </div>
-          <div class="block-title">Navigation</div>
-          <div class="list list-strong inset list-dividers-ios">
+          <div class="block-title">Players</div>
+          <div class="list list-strong inset sortable sortable-enabled">
             <ul>
-              <li>
-                <a href="/about/" class="item-content item-link">
+              <li class="swipeout">
+                <div class="item-content swipeout-content">
                   <div class="item-inner">
-                    <div class="item-title">About</div>
+                    <div class="item-title">Chirag</div>
                   </div>
-                </a>
+                  <div class="item-after">
+                    <div class="sortable-handler"></div>
+                  </div>
+                </div>
+                <div class="swipeout-actions-right">
+                  <a class="swipeout-delete">Delete</a>
+                </div>
               </li>
-              <li>
-                <a href="/form/" class="item-content item-link">
+              <li class="swipeout">
+                <div class="item-content swipeout-content">
                   <div class="item-inner">
-                    <div class="item-title">Form</div>
+                    <div class="item-title">Riyan</div>
                   </div>
-                </a>
+                  <div class="item-after">
+                    <div class="sortable-handler"></div>
+                  </div>
+                </div>
+                <div class="swipeout-actions-right">
+                  <a class="swipeout-delete">Delete</a>
+                </div>
               </li>
-              <li>
-                <a href="#" class="item-content item-link" id="test-btn">
+              <li class="swipeout">
+                <div class="item-content swipeout-content">
                   <div class="item-inner">
-                    <div class="item-title">Test</div>
+                    <div class="item-title">Krish</div>
                   </div>
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          <div class="block-title">Modals</div>
-          <div class="block grid grid-cols-2 grid-gap">
-            <a href="#" class="button button-fill popup-open" data-popup="#my-popup">Popup</a>
-            <a href="#" class="button button-fill login-screen-open" data-login-screen="#my-login-screen">Login Screen</a>
-          </div>
-
-          <div class="block-title">Panels</div>
-          <div class="block grid grid-cols-2 grid-gap">
-            <a href="#" class="button button-fill panel-open" data-panel="left">Left Panel</a>
-            <a href="#" class="button button-fill panel-open" data-panel="right">Right Panel</a>
-          </div>
-
-          <div class="list list-strong inset list-dividers-ios links-list">
-            <ul>
-              <li>
-                <a href="/dynamic-route/blog/45/post/125/?foo=bar#about">Dynamic (Component) Route</a>
-              </li>
-              <li>
-                <a href="/load-something-that-doesnt-exist/">Default Route (404)</a>
-              </li>
-              <li>
-                <a href="/request-and-load/user/123456/">Request Data & Load</a>
+                  <div class="item-after">
+                    <div class="sortable-handler"></div>
+                  </div>
+                </div>
+                <div class="swipeout-actions-right">
+                  <a class="swipeout-delete">Delete</a>
+                </div>
               </li>
             </ul>
           </div>
@@ -156,106 +104,19 @@
       </div>
     </div>
 
-
-    <!-- Popup -->
-    <div class="popup" id="my-popup">
-      <div class="view">
-        <div class="page">
-          <div class="navbar">
-            <div class="navbar-bg"></div>
-            <div class="navbar-inner">
-              <div class="title">Popup</div>
-              <div class="right">
-                <a href="#" class="link popup-close">Close</a>
-              </div>
-            </div>
-          </div>
-          <div class="page-content">
-            <div class="block">
-              <p>Popup content goes here.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Login Screen -->
-    <div class="login-screen" id="my-login-screen">
-      <div class="view">
-        <div class="page">
-          <div class="page-content login-screen-content">
-            <div class="login-screen-title">Login</div>
-            <div class="list">
-              <ul>
-                <li class="item-content item-input">
-                  <div class="item-inner">
-                    <div class="item-title item-label">Username</div>
-                    <div class="item-input-wrap">
-                      
-                      <input type="text" name="username" placeholder="Your username"/>
-                    </div>
-                  </div>
-                </li>
-                <li class="item-content item-input">
-                  <div class="item-inner">
-                    <div class="item-title item-label">Password</div>
-                    <div class="item-input-wrap">
-                      
-                      <input type="password" name="password" placeholder="Your password"/>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="list">
-              <ul>
-                <li>
-                  
-                  <a href="#" class="item-link list-button login-button">Sign In</a>
-                </li>
-              </ul>
-              <div class="block-footer">Some text about login information.<br/>Click "Sign In" to close Login Screen</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="sheet-modal demo-sheet-swipe-to-step" style="height:auto">
+    <div class="sheet-modal more-options-modal" style="height:auto">
       <div class="sheet-modal-inner">
-        <div class="swipe-handler" @click=${toggleSwipeStep}></div>
-        <div class="sheet-modal-swipe-step">
-          <div class="display-flex padding justify-content-space-between align-items-center">
-            <div style="font-size: 18px"><b>Total:</b></div>
-            <div style="font-size: 22px"><b>$500</b></div>
+        <div class="swipe-handler"></div>
+        <div class="page-content">
+          <div class="block-title block-title-large">Hello!</div>
+          <div class="block">
+            <p>Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus, non vero corporis voluptatibus
+              similique odit ab. Quaerat quasi consectetur quidem libero? Repudiandae adipisci vel voluptatum, autem
+              libero minus dignissimos repellat.</p>
+            <p>Iusto, est corrupti! Totam minus voluptas natus esse possimus nobis, delectus veniam expedita sapiente ut
+              cum reprehenderit aliquid odio amet praesentium vero temporibus obcaecati beatae aspernatur incidunt,
+              perferendis voluptates doloribus?</p>
           </div>
-          <div class="padding-horizontal padding-bottom">
-            <a class="button button-large button-fill">Make Payment</a>
-            <div class="margin-top text-align-center">Swipe up for more details</div>
-          </div>
-        </div>
-        <div class="block-title block-title-medium margin-top">Your order:</div>
-        <div class="list no-hairlines">
-          <ul>
-            <li class="item-content">
-              <div class="item-inner">
-                <div class="item-title">Item 1</div>
-                <div class="item-after"><b>$200</b></div>
-              </div>
-            </li>
-            <li class="item-content">
-              <div class="item-inner">
-                <div class="item-title">Item 2</div>
-                <div class="item-after"><b>$180</b></div>
-              </div>
-            </li>
-            <li class="item-content">
-              <div class="item-inner">
-                <div class="item-title">Delivery</div>
-                <div class="item-after"><b>$120</b></div>
-              </div>
-            </li>
-          </ul>
         </div>
       </div>
     </div>
