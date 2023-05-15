@@ -8,8 +8,13 @@ var routes = [
     path: '/about/',
     url: './pages/about.html',
     on: {
-      pageInit: function(e, page){
-        location.hash = "#3";
+      pageBeforeIn: function(e, page) {
+        if (location.hash == "#1") {
+          location.hash = "#2";
+          setTimeout(function() {
+            location.hash = "#3";
+          }, 10);
+        } else { location.hash = "#3"; }
       },
     }
   },
