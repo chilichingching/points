@@ -72,6 +72,7 @@ let backBtnToast = app.toast.create({
 });
 
 $(window).on('hashchange', function(e) {
+  $("#app .title")[0].innerHTML = location.hash;
   if (finishedLoopingHashes) {
     if (location.hash == "#1") {
       // alert("Press back again to exit");
