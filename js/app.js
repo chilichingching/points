@@ -56,18 +56,19 @@ var app = new Framework7({
         // Init cordova APIs (see cordova-app.js)
         cordovaApp.init(f7);
       }
-      
-      // more_options_modal = f7.sheet.create({
-      //   el: '.more-options-modal',
-      //   swipeToClose: true,
-      //   swipeToStep: true,
-      //   push: true,
-      //   backdrop: true
-      // });
 
+      sheetSwipeToClose = f7.sheet.create({
+        el: '.more-options-modal',
+        swipeToClose: true,
+        push: true,
+        backdrop: true,
+      });
     },
   },
 });
+
+
+/** BACK BUTTON STUFF */
 
 var finishedLoopingHashes = false;
 var backBtnPressed = false;
@@ -95,10 +96,8 @@ if (!isIphone) {
   
   
   $(window).on('hashchange', function(e) {
-    $("#app .title")[0].innerHTML = location.hash;
     if (finishedLoopingHashes) {
       if (location.hash == "#1") {
-        // alert("Press back again to exit");
         backBtnToast.open();
         setTimeout(function() {
           if (!backBtnPressedBeforePageLoaded) {
