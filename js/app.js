@@ -53,7 +53,7 @@ var app = new Framework7({
 
 var finishedLoopingHashes = false;
 
-function loopHash(x=0) {
+function loopHash(x=1) {
   if (x != 3) {
     location.hash = "#" + x;
     setTimeout(function() {
