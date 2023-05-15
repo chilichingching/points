@@ -47,36 +47,49 @@ var app = new Framework7({
         backdrop: true
       });
 
-      $("#app .page .navbar .title")[0].onclick = function() {
-        this.style.color = 'red';
-      };
-
-      $("#app .page .navbar .title")[0].click();
-
     },
   },
 });
 
 var finishedLoopingHashes = false;
 
-function loopHash(x) {
-  if (x > 0) {
-    location.hash = "#" + x;
-    setTimeout(function() {
-      loopHash(x - 1);
-    }, 1);
-  } else {
-    finishedLoopingHashes = true;
-  }
-}
+// function loopHash(x) {
+//   if (x > 0) {
+//     location.hash = "#" + x;
+//     setTimeout(function() {
+//       loopHash(x - 1);
+//     }, 1);
+//   } else {
+//     finishedLoopingHashes = true;
+//   }
+// }
 
-loopHash(10);
+// loopHash(10);
+
+// $(window).on('hashchange', function() {
+//   if (finishedLoopingHashes) {
+//     alert(location.hash);
+//   } else {
+//     console.log("change " + location.hash)
+//   }
+// });
+
+location.hash = "#1";
+setTimeout(function() {
+  location.hash = "#2";
+  finishedLoopingHashes = true;
+}, 1);
 
 $(window).on('hashchange', function() {
-  if (finishedLoopingHashes) {
-    alert(location.hash);
-  } else {
-    console.log("change " + location.hash)
+  if (!finishedLoopingHashes) { return; }
+  if (location.hash == "#1") {
+    alert("Press back again to exit");
+    setTimeout(function() {
+      location.hash = "#2";
+    }, 1000);
+  } else if (location.hash == "#3") {
+    console.log("going back");
+    window.history.back();
   }
 });
 
