@@ -7,6 +7,11 @@ var routes = [
   {
     path: '/about/',
     url: './pages/about.html',
+    on: {
+      pageInit: function(e, page){
+        location.hash = "#3";
+      },
+    }
   },
   {
     path: '(.*)',

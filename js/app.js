@@ -39,19 +39,20 @@ var app = new Framework7({
         cordovaApp.init(f7);
       }
       
-      more_options_modal = f7.sheet.create({
-        el: '.more-options-modal',
-        swipeToClose: true,
-        swipeToStep: true,
-        push: true,
-        backdrop: true
-      });
+      // more_options_modal = f7.sheet.create({
+      //   el: '.more-options-modal',
+      //   swipeToClose: true,
+      //   swipeToStep: true,
+      //   push: true,
+      //   backdrop: true
+      // });
 
     },
   },
 });
 
 var finishedLoopingHashes = false;
+var backBtnPressed = false;
 
 function loopHash(x=1) {
   if (x != 3) {
@@ -82,7 +83,9 @@ $(window).on('hashchange', function(e) {
       }, 1500);
     } else if (location.hash == "#3") {
       if (e.oldURL.slice(-1) == "4") {
-        console.log("GO BACK");
+        if (!backBtnPressed) {
+          app.views.main.router.back();
+        }
         window.history.back();
       } else {
         setTimeout(function() {
@@ -92,3 +95,11 @@ $(window).on('hashchange', function(e) {
     }
   }
 });
+
+function backBtn() {
+  window.history.back();
+  backBtnPressed = true;
+  setTimeout(function() {
+    backBtnPressed = false;
+  }, 100);
+}
