@@ -22,6 +22,7 @@ var app = new Framework7({
       url: './pages/about.html',
       on: {
         pageBeforeIn: pageBeforeIn,
+        pageAfterIn: pageAfterIn
       }
     },
     {
@@ -68,28 +69,30 @@ var app = new Framework7({
   },
 });
 
-if (!isIphone) {
-  var finishedLoopingHashes = false;
-  var backBtnPressed = false;
-  var backBtnPressedBeforePageLoaded = false;
-  
-  function loopHash(x=1) {
-    if (x != 3) {
-      location.hash = "#" + x;
-      setTimeout(function() {
-        loopHash(x + 1);
-      }, 10);
-    } else {
-      finishedLoopingHashes = true;
-    }
+var finishedLoopingHashes = false;
+var backBtnPressed = false;
+var backBtnPressedBeforePageLoaded = false;
+var isPageLoading = false;
+
+function loopHash(x=1) {
+  if (x != 3) {
+    location.hash = "#" + x;
+    setTimeout(function() {
+      loopHash(x + 1);
+    }, 10);
+  } else {
+    finishedLoopingHashes = true;
   }
-  
+}
+
+if (!isIphone) {
   loopHash();
-  
+
   let backBtnToast = app.toast.create({
     text: 'Press back again to exit',
     closeTimeout: 1500,
   });
+  
   
   $(window).on('hashchange', function(e) {
     $("#app .title")[0].innerHTML = location.hash;
@@ -103,7 +106,7 @@ if (!isIphone) {
           }
         }, 1500);
       } else if (location.hash == "#3") {
-        if (e.oldURL.slice(-1) == "4") {
+        if (e.oldURL.slice(-1) == "4" && !isPageLoading) {
           if (!backBtnPressed) {
             app.views.main.router.back();
           }
@@ -116,8 +119,10 @@ if (!isIphone) {
       }
     }
   });
-  
-  function backBtn() {
+}
+
+function backBtn() {
+  if (!isIphone) {
     window.history.back();
     backBtnPressed = true;
     setTimeout(function() {
@@ -126,9 +131,8 @@ if (!isIphone) {
   }
 }
 
-function backBtn() {}
-
 function pageBeforeIn(e, page) {
+  isPageLoading = true;
   if (!isIphone) {
     if (location.hash == "#1") {
       backBtnPressedBeforePageLoaded = true;
@@ -141,4 +145,8 @@ function pageBeforeIn(e, page) {
       }, 1550);
     } else { location.hash = "#3"; }
   }
+}
+
+function pageAfterIn(e, page) {
+  isPageLoading = false;
 }
