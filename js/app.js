@@ -51,6 +51,29 @@ var app = new Framework7({
   },
 });
 
+var finishedLoopingHashes = false;
+
+function loopHash(x) {
+  if (x > 0) {
+    location.hash = "#" + x;
+    setTimeout(function() {
+      loopHash(x - 1);
+    }, 1);
+  } else {
+    finishedLoopingHashes = true;
+  }
+}
+
+loopHash(10);
+
+$(window).on('hashchange', function() {
+  if (finishedLoopingHashes) {
+    alert(location.hash);
+  } else {
+    console.log("change " + location.hash)
+  }
+});
+
 // app.router.on("swipebackMove", function(data) {
   
 // });
