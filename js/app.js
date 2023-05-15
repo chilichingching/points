@@ -47,6 +47,12 @@ var app = new Framework7({
         backdrop: true
       });
 
+      $("#app .page .navbar .title")[0].onclick = function() {
+        this.style.color = 'red';
+      };
+
+      $("#app .page .navbar .title")[0].click();
+
     },
   },
 });
