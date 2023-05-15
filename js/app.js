@@ -53,46 +53,41 @@ var app = new Framework7({
 
 var finishedLoopingHashes = false;
 
-// function loopHash(x) {
-//   if (x > 0) {
-//     location.hash = "#" + x;
-//     setTimeout(function() {
-//       loopHash(x - 1);
-//     }, 1);
-//   } else {
-//     finishedLoopingHashes = true;
-//   }
-// }
-
-// loopHash(10);
-
-// $(window).on('hashchange', function() {
-//   if (finishedLoopingHashes) {
-//     alert(location.hash);
-//   } else {
-//     console.log("change " + location.hash)
-//   }
-// });
-
-location.hash = "#1";
-setTimeout(function() {
-  location.hash = "#2";
-  finishedLoopingHashes = true;
-}, 1);
-
-$(window).on('hashchange', function() {
-  if (!finishedLoopingHashes) { return; }
-  if (location.hash == "#1") {
-    alert("Press back again to exit");
+function loopHash(x=0) {
+  if (x != 3) {
+    location.hash = "#" + x;
     setTimeout(function() {
-      location.hash = "#2";
-    }, 1000);
-  } else if (location.hash == "#3") {
-    console.log("going back");
-    window.history.back();
+      loopHash(x + 1);
+    }, 10);
+  } else {
+    finishedLoopingHashes = true;
   }
+}
+
+loopHash();
+
+let backBtnToast = app.toast.create({
+  text: 'Press back again to exit',
+  closeTimeout: 1500,
 });
 
-// app.router.on("swipebackMove", function(data) {
-  
-// });
+$(window).on('hashchange', function(e) {
+  if (finishedLoopingHashes) {
+    if (location.hash == "#1") {
+      // alert("Press back again to exit");
+      backBtnToast.open();
+      setTimeout(function() {
+        location.hash = "#2";
+      }, 1500);
+    } else if (location.hash == "#3") {
+      if (e.oldURL.slice(-1) == "4") {
+        console.log("GO BACK");
+        window.history.back();
+      } else {
+        setTimeout(function() {
+          location.hash = "#4";
+        }, 50);
+      }
+    }
+  }
+});
