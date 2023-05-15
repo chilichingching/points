@@ -71,6 +71,7 @@ var app = new Framework7({
 if (!isIphone) {
   var finishedLoopingHashes = false;
   var backBtnPressed = false;
+  var backBtnPressedBeforePageLoaded = false;
   
   function loopHash(x=1) {
     if (x != 3) {
@@ -97,7 +98,9 @@ if (!isIphone) {
         // alert("Press back again to exit");
         backBtnToast.open();
         setTimeout(function() {
-          location.hash = "#2";
+          if (!backBtnPressedBeforePageLoaded) {
+            location.hash = "#2";
+          }
         }, 1500);
       } else if (location.hash == "#3") {
         if (e.oldURL.slice(-1) == "4") {
@@ -128,10 +131,14 @@ function backBtn() {}
 function pageBeforeIn(e, page) {
   if (!isIphone) {
     if (location.hash == "#1") {
+      backBtnPressedBeforePageLoaded = true;
       location.hash = "#2";
       setTimeout(function() {
         location.hash = "#3";
       }, 10);
+      setTimeout(function() {
+        backBtnPressedBeforePageLoaded = false;
+      }, 1550);
     } else { location.hash = "#3"; }
   }
 }
