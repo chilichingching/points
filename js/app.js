@@ -1,5 +1,6 @@
 var $ = Dom7;
 
+var isIphone = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 var device = Framework7.getDevice();
 var app = new Framework7({
   name: 'Points', // App name
@@ -11,7 +12,23 @@ var app = new Framework7({
   // App store
   store: store,
   // App routes
-  routes: routes,
+  routes: [
+    {
+      path: '/',
+      url: './index.html',
+    },
+    {
+      path: '/about/',
+      url: './pages/about.html',
+      on: {
+        pageBeforeIn: pageBeforeIn,
+      }
+    },
+    {
+      path: '(.*)',
+      url: './pages/404.html',
+    },
+  ],
   // Register service worker
   serviceWorker: {
     path: '/service-worker.js',
@@ -48,55 +65,69 @@ var app = new Framework7({
   },
 });
 
-var finishedLoopingHashes = false;
-var backBtnPressed = false;
-
-function loopHash(x=1) {
-  if (x != 3) {
-    location.hash = "#" + x;
+if (!isIphone) {
+  var finishedLoopingHashes = false;
+  var backBtnPressed = false;
+  
+  function loopHash(x=1) {
+    if (x != 3) {
+      location.hash = "#" + x;
+      setTimeout(function() {
+        loopHash(x + 1);
+      }, 10);
+    } else {
+      finishedLoopingHashes = true;
+    }
+  }
+  
+  loopHash();
+  
+  let backBtnToast = app.toast.create({
+    text: 'Press back again to exit',
+    closeTimeout: 1500,
+  });
+  
+  $(window).on('hashchange', function(e) {
+    if (finishedLoopingHashes) {
+      if (location.hash == "#1") {
+        // alert("Press back again to exit");
+        backBtnToast.open();
+        setTimeout(function() {
+          location.hash = "#2";
+        }, 1500);
+      } else if (location.hash == "#3") {
+        if (e.oldURL.slice(-1) == "4") {
+          if (!backBtnPressed) {
+            app.views.main.router.back();
+          }
+          window.history.back();
+        } else {
+          setTimeout(function() {
+            location.hash = "#4";
+          }, 50);
+        }
+      }
+    }
+  });
+  
+  function backBtn() {
+    window.history.back();
+    backBtnPressed = true;
     setTimeout(function() {
-      loopHash(x + 1);
-    }, 10);
-  } else {
-    finishedLoopingHashes = true;
+      backBtnPressed = false;
+    }, 100);
   }
 }
 
-loopHash();
+function backBtn() {}
 
-let backBtnToast = app.toast.create({
-  text: 'Press back again to exit',
-  closeTimeout: 1500,
-});
-
-$(window).on('hashchange', function(e) {
-  $("#app .title")[0].innerHTML = location.hash;
-  if (finishedLoopingHashes) {
+function pageBeforeIn(e, page) {
+  if (!isIphone) {
     if (location.hash == "#1") {
-      // alert("Press back again to exit");
-      backBtnToast.open();
+      location.hash = "#2";
       setTimeout(function() {
-        location.hash = "#2";
-      }, 1500);
-    } else if (location.hash == "#3") {
-      if (e.oldURL.slice(-1) == "4") {
-        if (!backBtnPressed) {
-          app.views.main.router.back();
-        }
-        window.history.back();
-      } else {
-        setTimeout(function() {
-          location.hash = "#4";
-        }, 50);
-      }
-    }
+        location.hash = "#3";
+      }, 10);
+    } else { location.hash = "#3"; }
   }
-});
-
-function backBtn() {
-  window.history.back();
-  backBtnPressed = true;
-  setTimeout(function() {
-    backBtnPressed = false;
-  }, 100);
 }
