@@ -81,7 +81,7 @@ function validateName(str) {
 }
 
 function test() {
-  $("#app .title")[0].innerHTML = window.outerHeight;
+  $("#app .title")[0].innerHTML = visualViewport.height;
   setTimeout(function() {
     test();
   }, 100);
