@@ -78,9 +78,7 @@ var namePrompt = app.dialog.create({
 
 $(".add-player-btn").on("click", function() {
   namePrompt.open();
-  setTimeout(() => {
-    $(namePrompt.el).find("input")[0].focus();
-  }, 50);
+  $(namePrompt.el).find("input")[0].focus();
 });
 
 function validateName(str) {
@@ -99,19 +97,6 @@ visualViewport.addEventListener('resize', (event) => {
 });
 
 function addName(name) {
-  // <li class="swipeout">
-  //   <div class="item-content swipeout-content">
-  //     <div class="item-inner">
-  //       <div class="item-title">Chirag</div>
-  //     </div>
-  //     <div class="item-after">
-  //       <div class="sortable-handler"></div>
-  //     </div>
-  //   </div>
-  //   <div class="swipeout-actions-right">
-  //     <a class="swipeout-delete">Delete</a>
-  //   </div>
-  // </li>
   var name_li = document.createElement("li");
   name_li.classList.add("swipeout");
   var name_div1 =  document.createElement("div");
