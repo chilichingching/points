@@ -60,6 +60,70 @@ var app = new Framework7({
   },
 });
 
+/** HOME STUFF */
+
+$(".add-player-btn").on("click", function() {
+  namePrompt = app.dialog.prompt('Name', function (name) {
+    addName(validateName(name));
+  });
+  $(namePrompt.el).find("input")[0].focus();
+});
+
+function validateName(str) {
+  var splitStr = str.toLowerCase().toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-").split(' ');
+  for (var i = 0; i < splitStr.length; i++) {
+      // You do not need to check if i is larger than splitStr length, as your for does that for you
+      // Assign it back to the array
+      splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
+  }
+  // Directly return the joined string
+  return splitStr.join(' '); 
+}
+
+function addName(name) {
+  // <li class="swipeout">
+  //   <div class="item-content swipeout-content">
+  //     <div class="item-inner">
+  //       <div class="item-title">Chirag</div>
+  //     </div>
+  //     <div class="item-after">
+  //       <div class="sortable-handler"></div>
+  //     </div>
+  //   </div>
+  //   <div class="swipeout-actions-right">
+  //     <a class="swipeout-delete">Delete</a>
+  //   </div>
+  // </li>
+  var name_li = document.createElement("li");
+  name_li.classList.add("swipeout");
+  var name_div1 =  document.createElement("div");
+  name_div1.classList.add("item-content");
+  name_div1.classList.add("swipeout-content");
+  name_li.appendChild(name_div1);
+  var name_div2 =  document.createElement("div");
+  name_div2.classList.add("item-inner");
+  name_div1.appendChild(name_div2);
+  var name_div3 =  document.createElement("div");
+  name_div3.classList.add("item-title");
+  name_div3.innerHTML = name;
+  name_div2.appendChild(name_div3);
+  var name_div4 =  document.createElement("div");
+  name_div4.classList.add("item-after");
+  name_div1.appendChild(name_div4);
+  var name_div5 =  document.createElement("div");
+  name_div5.classList.add("sortable-handler");
+  name_div4.appendChild(name_div5);
+  var name_div6 =  document.createElement("div");
+  name_div6.classList.add("swipeout-actions-right");
+  name_li.appendChild(name_div6);
+  var name_a1 =  document.createElement("a");
+  name_a1.classList.add("swipeout-delete");
+  name_a1.innerHTML = "Delete";
+  name_div6.appendChild(name_a1);
+
+  $(".players-list ul")[0].appendChild(name_li);
+}
+
 /** BACK BUTTON STUFF */
 
 var finishedLoopingHashes = false;
