@@ -80,6 +80,14 @@ function validateName(str) {
   return splitStr.join(' '); 
 }
 
+// create an Observer instance
+const resizeObserver = new ResizeObserver(function(entries) {
+  $("#app .title")[0].innerHTML = entries[0].target.clientHeight;
+});
+
+// start observing a DOM node
+resizeObserver.observe(document.body)
+
 function addName(name) {
   // <li class="swipeout">
   //   <div class="item-content swipeout-content">
