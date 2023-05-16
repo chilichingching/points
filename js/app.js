@@ -110,7 +110,7 @@ visualViewport.addEventListener('resize', (event) => {
 
 function addName(name) {
   name = validateName(name);
-  
+
   var name_li = document.createElement("li");
   name_li.classList.add("swipeout");
   var name_div1 =  document.createElement("div");
@@ -212,7 +212,7 @@ if (!isIphone) {
           if (!backBtnPressed) {
             if (moreOptionsModal.opened) {
               moreOptionsModal.close();
-            } else if (moreOptionsModal.opened) {
+            } else if (namePrompt.opened) {
               namePrompt.close();
             } else {
               app.views.main.router.back();
