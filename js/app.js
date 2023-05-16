@@ -56,17 +56,9 @@ var app = new Framework7({
         // Init cordova APIs (see cordova-app.js)
         cordovaApp.init(f7);
       }
-
-      sheetSwipeToClose = f7.sheet.create({
-        el: '.more-options-modal',
-        swipeToClose: true,
-        push: true,
-        backdrop: true,
-      });
     },
   },
 });
-
 
 /** BACK BUTTON STUFF */
 
@@ -74,6 +66,36 @@ var finishedLoopingHashes = false;
 var backBtnPressed = false;
 var backBtnPressedBeforePageLoaded = false;
 var isPageLoading = false;
+var backdropEl = $(".sheet-backdrop")[0];
+var lastOpenedModal;
+var moreOptionsModal = app.sheet.create({
+  el: '.more-options-modal',
+  swipeToClose: true,
+  push: true,
+  backdrop: true,
+  on: {
+    open: function() {
+      pageBeforeIn();
+    },
+    opened: function() {
+      pageAfterIn();
+    }
+  }
+});
+
+$(document).on('sheet:open', function(e) {
+  lastOpenedModal = e.target;
+});
+
+$(backdropEl).on("click", function() {
+  if (lastOpenedModal == moreOptionsModal.el) {
+    if (moreOptionsModal.opened) {
+      pageBeforeIn();
+    } else {
+      window.history.back();
+    }
+  }
+});
 
 function loopHash(x=1) {
   if (x != 3) {
@@ -107,7 +129,11 @@ if (!isIphone) {
       } else if (location.hash == "#3") {
         if (e.oldURL.slice(-1) == "4" && !isPageLoading) {
           if (!backBtnPressed) {
-            app.views.main.router.back();
+            if (moreOptionsModal.opened) {
+              moreOptionsModal.close();
+            } else {
+              app.views.main.router.back();
+            }
           }
           window.history.back();
         } else {
@@ -131,6 +157,10 @@ function backBtn() {
 }
 
 function pageBeforeIn(e, page) {
+  pageBeforeIn();
+}
+
+function pageBeforeIn() {
   isPageLoading = true;
   if (!isIphone) {
     if (location.hash == "#1") {
@@ -147,5 +177,9 @@ function pageBeforeIn(e, page) {
 }
 
 function pageAfterIn(e, page) {
+  pageAfterIn();
+}
+
+function pageAfterIn() {
   isPageLoading = false;
 }
