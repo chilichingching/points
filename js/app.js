@@ -65,7 +65,18 @@ var app = new Framework7({
 var namePrompt = app.dialog.create({
   title: 'Name',
   content: '<div class="dialog-input-field input"><input type="text" class="dialog-input" value=""></div>',
-  buttons: [{text: 'Cancel'}, {text: 'OK'}],
+  buttons: [{
+    text: 'Cancel',
+    onClick: function() {
+      window.history.back();
+    }
+  }, {
+    text: 'OK',
+    onClick: function() {
+      addName($(namePrompt.el).find("input")[0].value);
+      window.history.back();
+    }
+  }],
   on: {
     open: function() {
       pageBeforeIn();
@@ -77,6 +88,7 @@ var namePrompt = app.dialog.create({
 });
 
 $(".add-player-btn").on("click", function() {
+  $(namePrompt.el).find("input")[0].value = "";
   namePrompt.open();
   $(namePrompt.el).find("input")[0].focus();
 });
@@ -97,6 +109,8 @@ visualViewport.addEventListener('resize', (event) => {
 });
 
 function addName(name) {
+  name = validateName(name);
+  
   var name_li = document.createElement("li");
   name_li.classList.add("swipeout");
   var name_div1 =  document.createElement("div");
