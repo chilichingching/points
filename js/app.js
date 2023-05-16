@@ -80,13 +80,13 @@ function validateName(str) {
   return splitStr.join(' '); 
 }
 
-// create an Observer instance
-const resizeObserver = new ResizeObserver(function(entries) {
-  $("#app .title")[0].innerHTML = entries[0].target.clientHeight;
-});
-
-// start observing a DOM node
-resizeObserver.observe(document.body)
+function test() {
+  $("#app .title")[0].innerHTML = window.outerHeight;
+  setTimeout(function() {
+    test();
+  }, 100);
+}
+test();
 
 function addName(name) {
   // <li class="swipeout">
