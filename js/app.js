@@ -62,11 +62,25 @@ var app = new Framework7({
 
 /** HOME STUFF */
 
+var namePrompt = app.dialog.create({
+  title: 'Name',
+  content: '<div class="dialog-input-field input"><input type="text" class="dialog-input" value=""></div>',
+  buttons: [{text: 'Cancel'}, {text: 'OK'}],
+  on: {
+    open: function() {
+      pageBeforeIn();
+    },
+    opened: function() {
+      pageAfterIn();
+    }
+  }
+});
+
 $(".add-player-btn").on("click", function() {
-  namePrompt = app.dialog.prompt('Name', function (name) {
-    addName(validateName(name));
-  });
-  $(namePrompt.el).find("input")[0].focus();
+  namePrompt.open();
+  setTimeout(() => {
+    $(namePrompt.el).find("input")[0].focus();
+  }, 50);
 });
 
 function validateName(str) {
@@ -199,6 +213,8 @@ if (!isIphone) {
           if (!backBtnPressed) {
             if (moreOptionsModal.opened) {
               moreOptionsModal.close();
+            } else if (moreOptionsModal.opened) {
+              namePrompt.close();
             } else {
               app.views.main.router.back();
             }
@@ -228,7 +244,7 @@ function pageBeforeIn(e, page) {
   pageBeforeIn();
 }
 
-function pageBeforeIn() {
+function pageBeforeIn(timeToWait=1550) {
   isPageLoading = true;
   if (!isIphone) {
     if (location.hash == "#1") {
@@ -239,7 +255,7 @@ function pageBeforeIn() {
       }, 10);
       setTimeout(function() {
         backBtnPressedBeforePageLoaded = false;
-      }, 1550);
+      }, timeToWait);
     } else { location.hash = "#3"; }
   }
 }
