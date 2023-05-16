@@ -80,13 +80,9 @@ function validateName(str) {
   return splitStr.join(' '); 
 }
 
-function test() {
-  $("#app .title")[0].innerHTML = visualViewport.height;
-  setTimeout(function() {
-    test();
-  }, 100);
-}
-test();
+visualViewport.addEventListener('resize', (event) => {
+  document.body.style.maxHeight = event.target.height + "px";
+});
 
 function addName(name) {
   // <li class="swipeout">
