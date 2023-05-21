@@ -65,9 +65,19 @@ var app = new Framework7({
 
 /** HOME STUFF */
 
+function noScroll (event) {
+  if (event.type === 'focus') {
+    document.body.classList.add('no-scroll');
+  }
+
+  else if (event.type === 'blur') {
+    document.body.classList.remove('no-scroll');
+  }
+}
+
 var namePrompt = app.dialog.create({
   title: 'Name',
-  content: '<div class="dialog-input-field input"><input type="text" class="dialog-input" value=""></div>',
+  content: '<div class="dialog-input-field input"><input type="text" class="dialog-input" value="" id="asdasdasd"></div>',
   buttons: [{
     text: 'Cancel',
     onClick: function() {
@@ -86,6 +96,8 @@ var namePrompt = app.dialog.create({
     },
     opened: function() {
       pageAfterIn();
+      document.getElementById("asdasdasd").addEventListener('focus', noScroll, false);
+      document.getElementById("asdasdasd").addEventListener('blur', noScroll, false);
     }
   }
 });
@@ -109,8 +121,8 @@ function validateName(str) {
 
 visualViewport.addEventListener('resize', (event) => {
   // document.body.style.maxHeight = event.target.height + "px";
-  document.body.style.overflowY = "hidden";
-  viewport.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover, height=" + event.target.height + "px");
+  // document.body.style.overflowY = "hidden";
+  // viewport.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover, height=" + event.target.height + "px");
 });
 
 window.addEventListener('scroll', function(e) {
