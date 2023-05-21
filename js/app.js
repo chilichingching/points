@@ -106,6 +106,12 @@ function validateName(str) {
   return splitStr.join(' '); 
 }
 
+if (isIphone) {
+  visualViewport.addEventListener('resize', (event) => {
+    document.body.style.maxHeight = event.target.height + "px";
+  });
+}
+
 function addName(name) {
   name = validateName(name);
 
