@@ -43,9 +43,3 @@ body {
   position: fixed !important;
   top: 0px !important;
 }
-
-#app {
-  overflow-y: hidden !important;
-  position: fixed !important;
-  top: 0px !important;
-}
