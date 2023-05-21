@@ -62,11 +62,13 @@ var app = new Framework7({
   },
 });
 
+var users = [];
+
 /** HOME STUFF */
 
 var namePrompt = app.dialog.create({
   title: 'Name',
-  content: '<div class="dialog-input-field input"><input type="text" class="dialog-input" value="" id="asdasdasd"></div>',
+  content: '<div class="dialog-input-field input"><input type="text" class="dialog-input" value="" autocomplete="off"></div>',
   buttons: [{
     text: 'Cancel',
     onClick: function() {
@@ -74,6 +76,7 @@ var namePrompt = app.dialog.create({
     }
   }, {
     text: 'OK',
+    close: false,
     onClick: function() {
       addName($(namePrompt.el).find("input")[0].value);
       if (!isIphone) { window.history.back(); }
@@ -81,9 +84,27 @@ var namePrompt = app.dialog.create({
   }],
   on: {
     open: function() {
+      $(namePrompt.el).find(".dialog-button")[1].classList.add("disabled");
       pageBeforeIn();
     },
     opened: function() {
+      $(namePrompt.el).find("input")[0].addEventListener("keypress", function(event) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          if (!$(namePrompt.el).find(".dialog-button")[1].classList.contains("disabled")) {
+            addName($(namePrompt.el).find("input")[0].value);
+            if (!isIphone) { window.history.back(); }
+          }
+        }
+      });
+      $(namePrompt.el).find("input")[0].addEventListener("input", function() {
+        var name = $(namePrompt.el).find("input")[0].value;
+        if (name.trim() == "" || users.includes(validateName(name))) {
+          $(namePrompt.el).find(".dialog-button")[1].classList.add("disabled");
+        } else {
+          $(namePrompt.el).find(".dialog-button")[1].classList.remove("disabled");
+        }
+      });
       pageAfterIn();
     }
   }
@@ -96,13 +117,12 @@ $(".add-player-btn").on("click", function() {
 });
 
 function validateName(str) {
-  var splitStr = str.toLowerCase().toLowerCase().replace(/[^a-zA-Z0-9]+/g, "-").split(' ');
+  var splitStr = str.toLowerCase().trim().replace(/[^a-zA-Z0-9 ]+/g, "").split(' ');
   for (var i = 0; i < splitStr.length; i++) {
       // You do not need to check if i is larger than splitStr length, as your for does that for you
       // Assign it back to the array
       splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
   }
-  // Directly return the joined string
   return splitStr.join(' '); 
 }
 
@@ -115,34 +135,56 @@ if (isIphone) {
 function addName(name) {
   name = validateName(name);
 
-  var name_li = document.createElement("li");
-  name_li.classList.add("swipeout");
-  var name_div1 =  document.createElement("div");
-  name_div1.classList.add("item-content");
-  name_div1.classList.add("swipeout-content");
-  name_li.appendChild(name_div1);
-  var name_div2 =  document.createElement("div");
-  name_div2.classList.add("item-inner");
-  name_div1.appendChild(name_div2);
-  var name_div3 =  document.createElement("div");
-  name_div3.classList.add("item-title");
-  name_div3.innerHTML = name;
-  name_div2.appendChild(name_div3);
-  var name_div4 =  document.createElement("div");
-  name_div4.classList.add("item-after");
-  name_div1.appendChild(name_div4);
-  var name_div5 =  document.createElement("div");
-  name_div5.classList.add("sortable-handler");
-  name_div4.appendChild(name_div5);
-  var name_div6 =  document.createElement("div");
-  name_div6.classList.add("swipeout-actions-right");
-  name_li.appendChild(name_div6);
-  var name_a1 =  document.createElement("a");
-  name_a1.classList.add("swipeout-delete");
-  name_a1.innerHTML = "Delete";
-  name_div6.appendChild(name_a1);
+  if (!users.includes(name)) {
+    var name_li = document.createElement("li");
+    name_li.classList.add("swipeout");
+    var name_div1 = document.createElement("div");
+    name_div1.classList.add("item-content");
+    name_div1.classList.add("swipeout-content");
+    name_li.appendChild(name_div1);
+    var name_div2 = document.createElement("div");
+    name_div2.classList.add("item-inner");
+    name_div1.appendChild(name_div2);
+    var name_div3 = document.createElement("div");
+    name_div3.classList.add("item-title");
+    name_div3.innerHTML = name;
+    name_div2.appendChild(name_div3);
+    var name_div4 = document.createElement("div");
+    name_div4.classList.add("item-after");
+    name_div1.appendChild(name_div4);
+    var name_div5 = document.createElement("div");
+    name_div5.classList.add("sortable-handler");
+    name_div4.appendChild(name_div5);
+    var name_div6 = document.createElement("div");
+    name_div6.classList.add("swipeout-actions-right");
+    name_li.appendChild(name_div6);
+    var name_a1 = document.createElement("a");
+    name_a1.classList.add("swipeout-delete");
+    name_a1.innerHTML = "Delete";
+    name_div6.appendChild(name_a1);
+  
+    $(".players-list ul")[0].appendChild(name_li);
 
-  $(".players-list ul")[0].appendChild(name_li);
+    users.push(name);
+
+    checkUsersCount();
+  }
+}
+
+$(window).on('swipeout:delete', function(e) {
+  const deletedName = $(e.srcElement).find(".item-title")[0].innerHTML;
+
+  users.splice(users.indexOf(deletedName), 1);
+
+  checkUsersCount();
+});
+
+function checkUsersCount() {
+  if (users.length > 2) {
+    $(".start-game-btn")[0].classList.remove("disabled");
+  } else {
+    $(".start-game-btn")[0].classList.add("disabled");
+  }
 }
 
 /** BACK BUTTON STUFF */
