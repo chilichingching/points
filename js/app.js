@@ -2,6 +2,8 @@ var $ = Dom7;
 
 var isIphone = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 var hashHistory = [];
+var viewport = document.querySelector("meta[name=viewport]");
+
 var device = Framework7.getDevice();
 var app = new Framework7({
   name: 'Points', // App name
@@ -107,11 +109,7 @@ function validateName(str) {
 
 visualViewport.addEventListener('resize', (event) => {
   document.body.style.maxHeight = event.target.height + "px";
-  document.body.style.minHeight = event.target.height + "px";
-  document.body.style.height = event.target.height + "px";
-  document.getElementsByTagName("html")[0].style.maxHeight = event.target.height + "px";
-  document.getElementsByTagName("html")[0].style.minHeight = event.target.height + "px";
-  document.getElementsByTagName("html")[0].style.height = event.target.height + "px";
+  viewport.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover, height=" + event.target.height + "px");
 });
 
 window.addEventListener('scroll', function(e) {
