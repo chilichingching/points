@@ -31,19 +31,3 @@
 html, body {
   background-color: rgb(27, 27, 31);
 }
-
-html {
-  overflow-y: hidden !important;
-  position: fixed !important;
-  top: 0px !important;
-}
-
-body {
-  overflow-y: hidden !important;
-  position: fixed !important;
-  top: 0px !important;
-}
-
-* {
-  overflow-y: hidden !important;
-}

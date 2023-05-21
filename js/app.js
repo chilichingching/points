@@ -109,6 +109,12 @@ visualViewport.addEventListener('resize', (event) => {
   document.body.style.maxHeight = event.target.height + "px";
 });
 
+window.addEventListener('scroll', function(e) {
+  if (this.document.getElementsByTagName("input").length > 0) {
+    this.document.getElementsByTagName("input")[0].value = new Date().getTime() / 1000;
+  }
+}, true)
+
 function addName(name) {
   name = validateName(name);
 
