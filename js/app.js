@@ -65,16 +65,6 @@ var app = new Framework7({
 
 /** HOME STUFF */
 
-function noScroll (event) {
-  if (event.type === 'focus') {
-    document.body.classList.add('no-scroll');
-  }
-
-  else if (event.type === 'blur') {
-    document.body.classList.remove('no-scroll');
-  }
-}
-
 var namePrompt = app.dialog.create({
   title: 'Name',
   content: '<div class="dialog-input-field input"><input type="text" class="dialog-input" value="" id="asdasdasd"></div>',
@@ -96,8 +86,7 @@ var namePrompt = app.dialog.create({
     },
     opened: function() {
       pageAfterIn();
-      document.getElementById("asdasdasd").addEventListener('focus', noScroll, false);
-      document.getElementById("asdasdasd").addEventListener('blur', noScroll, false);
+      setTimeout(function() { document.documentElement.scrollTop = 0; }, 1000);
     }
   }
 });
