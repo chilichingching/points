@@ -108,7 +108,7 @@ function validateName(str) {
 }
 
 visualViewport.addEventListener('resize', (event) => {
-  document.body.style.maxHeight = event.target.height + "px";
+  // document.body.style.maxHeight = event.target.height + "px";
   viewport.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover, height=" + event.target.height + "px");
 });
 
