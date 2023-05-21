@@ -1,6 +1,7 @@
 var $ = Dom7;
 
 var isIphone = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+var hashHistory = [];
 var device = Framework7.getDevice();
 var app = new Framework7({
   name: 'Points', // App name
@@ -225,6 +226,12 @@ if (!isIphone) {
           }, 50);
         }
       }
+    }
+
+    if (e.newURL.slice(-1) == hashHistory.at(-2) && e.oldURL.slice(-1) == hashHistory.at(-1)) {
+      hashHistory.pop();
+    } else {
+      hashHistory.push(e.newURL.slice(-1));
     }
   });
 }

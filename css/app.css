@@ -31,3 +31,7 @@
 html, body {
   background-color: rgb(27, 27, 31);
 }
+
+html {
+  overflow-y: hidden;
+}
