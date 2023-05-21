@@ -33,11 +33,19 @@ html, body {
 }
 
 html {
-  overflow-y: hidden;
+  overflow-y: hidden !important;
+  position: fixed !important;
+  top: 0px !important;
 }
 
 body {
-  overflow-y: hidden;
-  position: fixed;
-  top: 0px;
+  overflow-y: hidden !important;
+  position: fixed !important;
+  top: 0px !important;
+}
+
+#app {
+  overflow-y: hidden !important;
+  position: fixed !important;
+  top: 0px !important;
 }
