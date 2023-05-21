@@ -2,7 +2,6 @@ var $ = Dom7;
 
 var isIphone = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
 var hashHistory = [];
-var viewport = document.querySelector("meta[name=viewport]");
 
 var device = Framework7.getDevice();
 var app = new Framework7({
@@ -86,7 +85,6 @@ var namePrompt = app.dialog.create({
     },
     opened: function() {
       pageAfterIn();
-      setTimeout(function() { document.documentElement.scrollTop = 0; }, 1000);
     }
   }
 });
@@ -107,18 +105,6 @@ function validateName(str) {
   // Directly return the joined string
   return splitStr.join(' '); 
 }
-
-visualViewport.addEventListener('resize', (event) => {
-  // document.body.style.maxHeight = event.target.height + "px";
-  // document.body.style.overflowY = "hidden";
-  // viewport.setAttribute("content", "width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, viewport-fit=cover, height=" + event.target.height + "px");
-});
-
-window.addEventListener('scroll', function(e) {
-  if (this.document.getElementsByTagName("input").length > 0) {
-    this.document.getElementsByTagName("input")[0].value = new Date().getTime() / 1000;
-  }
-}, true)
 
 function addName(name) {
   name = validateName(name);
