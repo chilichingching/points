@@ -35,3 +35,9 @@ html, body {
 html {
   overflow-y: hidden;
 }
+
+body {
+  overflow-y: hidden;
+  position: fixed;
+  top: 0px;
+}
