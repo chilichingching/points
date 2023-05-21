@@ -69,13 +69,13 @@ var namePrompt = app.dialog.create({
   buttons: [{
     text: 'Cancel',
     onClick: function() {
-      window.history.back();
+      if (!isIphone) { window.history.back(); }
     }
   }, {
     text: 'OK',
     onClick: function() {
       addName($(namePrompt.el).find("input")[0].value);
-      if (isIphone) { window.history.back(); }
+      if (!isIphone) { window.history.back(); }
     }
   }],
   on: {
@@ -174,7 +174,7 @@ $(backdropEl).on("click", function() {
     if (moreOptionsModal.opened) {
       pageBeforeIn();
     } else {
-      if (isIphone) { window.history.back(); }
+      if (!isIphone) { window.history.back(); }
     }
   }
 });
