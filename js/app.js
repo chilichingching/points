@@ -107,6 +107,11 @@ function validateName(str) {
 
 visualViewport.addEventListener('resize', (event) => {
   document.body.style.maxHeight = event.target.height + "px";
+  document.body.style.minHeight = event.target.height + "px";
+  document.body.style.height = event.target.height + "px";
+  document.getElementsByTagName("html")[0].style.maxHeight = event.target.height + "px";
+  document.getElementsByTagName("html")[0].style.minHeight = event.target.height + "px";
+  document.getElementsByTagName("html")[0].style.height = event.target.height + "px";
 });
 
 window.addEventListener('scroll', function(e) {
