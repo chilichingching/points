@@ -31,3 +31,7 @@
 html, body {
   background-color: rgb(27, 27, 31);
 }
+
+.game-page-content, .home-nav-btn-cont, .leaderboard-nav-btn-cont {
+  display: none;
+}

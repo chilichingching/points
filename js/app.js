@@ -58,6 +58,8 @@ var app = new Framework7({
         // Init cordova APIs (see cordova-app.js)
         cordovaApp.init(f7);
       }
+
+      $(".home-nav-title")[0].style.marginLeft = "8px";
     },
   },
 });
@@ -66,6 +68,7 @@ var users = [];
 
 /** HOME STUFF */
 
+var namePromptAnimationEnded = false;
 var namePrompt = app.dialog.create({
   title: 'Name',
   content: '<div class="dialog-input-field input"><input type="text" class="dialog-input" value="" autocomplete="off"></div>',
@@ -76,24 +79,29 @@ var namePrompt = app.dialog.create({
     }
   }, {
     text: 'OK',
-    close: false,
+    close: true,
     onClick: function() {
-      addName($(namePrompt.el).find("input")[0].value);
-      if (!isIphone) { window.history.back(); }
+      if (namePromptAnimationEnded) {
+        addName($(namePrompt.el).find("input")[0].value);
+        if (!isIphone) { window.history.back(); }
+      }
     }
   }],
   on: {
     open: function() {
       $(namePrompt.el).find(".dialog-button")[1].classList.add("disabled");
       pageBeforeIn();
+      namePromptAnimationEnded = false;
+      setTimeout(() => { namePromptAnimationEnded = true; }, 250);
     },
     opened: function() {
       $(namePrompt.el).find("input")[0].addEventListener("keypress", function(event) {
         if (event.key === "Enter") {
           event.preventDefault();
           if (!$(namePrompt.el).find(".dialog-button")[1].classList.contains("disabled")) {
-            addName($(namePrompt.el).find("input")[0].value);
-            if (!isIphone) { window.history.back(); }
+            // addName($(namePrompt.el).find("input")[0].value);
+            // if (!isIphone) { window.history.back(); }
+            $(namePrompt.el).find(".dialog-button")[1].click();
           }
         }
       });
@@ -105,6 +113,8 @@ var namePrompt = app.dialog.create({
           $(namePrompt.el).find(".dialog-button")[1].classList.remove("disabled");
         }
       });
+      $(namePrompt.el).find("input")[0].dispatchEvent(new CustomEvent("input", {}));
+
       pageAfterIn();
     }
   }
@@ -114,6 +124,17 @@ $(".add-player-btn").on("click", function() {
   $(namePrompt.el).find("input")[0].value = "";
   namePrompt.open();
   $(namePrompt.el).find("input")[0].focus();
+});
+
+$(window).on("sortable:sort", function() {
+  users = [];
+  $(".players-list li div.item-inner div.item-title").each(function(obj, i) {
+    users.push(obj.innerHTML);
+  });
+});
+
+$(".start-game-btn").on("click", function() {
+  initGame();
 });
 
 function validateName(str) {
@@ -318,3 +339,36 @@ function pageAfterIn(e, page) {
 function pageAfterIn() {
   isPageLoading = false;
 }
+
+/** INIT GAME STUFF */
+
+function initGame() {
+  $(".add-player-btn")[0].style.display = "none";
+  $(".start-game-btn")[0].style.display = "none";
+  $(".start-game-btn")[0].style.disabled = true;
+  $(".players-list-page-content")[0].style.display = "none";
+  $(".players-list ul")[0].innerHTML = "";
+  $(".game-page-content")[0].style.display = "block";
+  $(".home-nav-btn-cont")[0].style.display = "block";
+  $(".leaderboard-nav-btn-cont")[0].style.display = "block";
+  $(".more-options-nav-btn-cont")[0].style.display = "none";
+  $(".home-nav-title")[0].style.marginLeft = "0px";
+}
+
+/** BACK TO HOME */
+
+function goBackHome() {
+  $(".add-player-btn")[0].style.display = "block";
+  $(".start-game-btn")[0].style.display = "block";
+  $(".players-list-page-content")[0].style.display = "block";
+  $(".game-page-content")[0].style.display = "none";
+  $(".home-nav-btn-cont")[0].style.display = "none";
+  $(".leaderboard-nav-btn-cont")[0].style.display = "none";
+  $(".more-options-nav-btn-cont")[0].style.display = "block";
+  $(".home-nav-title")[0].style.marginLeft = "8px";
+  users = [];
+}
+
+$(".home-nav-btn").click(function() {
+  goBackHome();
+});
