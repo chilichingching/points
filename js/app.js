@@ -1,7 +1,6 @@
 var $ = Dom7;
 
 var isIphone = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-var hashHistory = [];
 
 var device = Framework7.getDevice();
 var app = new Framework7({
@@ -64,6 +63,12 @@ function onLoad() {
     onDeviceReady();
   }
 };
+
+if (isIphone) {
+  visualViewport.addEventListener('resize', (event) => {
+    document.body.style.maxHeight = event.target.height + "px";
+  });
+}
 
 var users = [];
 var namePrompt;
