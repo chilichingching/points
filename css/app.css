@@ -28,6 +28,10 @@
   background: #666
 }
 
+.home-nav-title.title-margin-left-8 {
+  margin-left: 8px;
+}
+
 html, body {
   background-color: rgb(27, 27, 31);
 }

@@ -22,10 +22,6 @@ var app = new Framework7({
     {
       path: '/about/',
       url: './pages/about.html',
-      on: {
-        pageBeforeIn: pageBeforeIn,
-        pageAfterIn: pageAfterIn
-      }
     },
     {
       path: '(.*)',
@@ -37,7 +33,7 @@ var app = new Framework7({
     path: '/service-worker.js',
   },
   view: {
-    mdSwipeBack: isIphone
+    mdSwipeBack: false
   },
 
 
@@ -58,67 +54,74 @@ var app = new Framework7({
         // Init cordova APIs (see cordova-app.js)
         cordovaApp.init(f7);
       }
-
-      $(".home-nav-title")[0].style.marginLeft = "8px";
     },
   },
 });
 
+function onLoad() {
+  document.addEventListener("deviceready", onDeviceReady, false);
+  if (!app.device.cordova) {
+    onDeviceReady();
+  }
+};
+
 var users = [];
-
-/** HOME STUFF */
-
+var namePrompt;
 var namePromptAnimationEnded = false;
-var namePrompt = app.dialog.create({
-  title: 'Name',
-  content: '<div class="dialog-input-field input"><input type="text" class="dialog-input" value="" autocomplete="off"></div>',
-  buttons: [{
-    text: 'Cancel',
-    onClick: function() {
-      if (!isIphone) { window.history.back(); }
-    }
-  }, {
-    text: 'OK',
-    close: true,
-    onClick: function() {
-      if (namePromptAnimationEnded) {
-        addName($(namePrompt.el).find("input")[0].value);
-        if (!isIphone) { window.history.back(); }
+
+function onDeviceReady() {
+  
+  app.sheet.create({
+    el: '.more-options-modal',
+    swipeToClose: true,
+    push: true,
+    backdrop: true
+  });
+
+  namePrompt = app.dialog.create({
+    title: 'Name',
+    content: '<div class="dialog-input-field input"><input type="text" class="dialog-input" value="" autocomplete="off"></div>',
+    buttons: [{
+      text: 'Cancel'
+    }, {
+      text: 'OK',
+      close: true,
+      onClick: function() {
+        if (namePromptAnimationEnded) {
+          addName($(namePrompt.el).find("input")[0].value);
+        }
+      }
+    }],
+    on: {
+      open: function() {
+        $(namePrompt.el).find(".dialog-button")[1].classList.add("disabled");
+        namePromptAnimationEnded = false;
+      },
+      opened: function() {
+        namePromptAnimationEnded = true;
+
+        $(namePrompt.el).find("input")[0].addEventListener("keypress", function(event) {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            if (!$(namePrompt.el).find(".dialog-button")[1].classList.contains("disabled")) {
+              $(namePrompt.el).find(".dialog-button")[1].click();
+            }
+          }
+        });
+
+        $(namePrompt.el).find("input")[0].addEventListener("input", function() {
+          var name = validateName($(namePrompt.el).find("input")[0].value);
+          if (name.length < 3 || users.includes(name)) {
+            $(namePrompt.el).find(".dialog-button")[1].classList.add("disabled");
+          } else {
+            $(namePrompt.el).find(".dialog-button")[1].classList.remove("disabled");
+          }
+        });
       }
     }
-  }],
-  on: {
-    open: function() {
-      $(namePrompt.el).find(".dialog-button")[1].classList.add("disabled");
-      pageBeforeIn();
-      namePromptAnimationEnded = false;
-      setTimeout(() => { namePromptAnimationEnded = true; }, 250);
-    },
-    opened: function() {
-      $(namePrompt.el).find("input")[0].addEventListener("keypress", function(event) {
-        if (event.key === "Enter") {
-          event.preventDefault();
-          if (!$(namePrompt.el).find(".dialog-button")[1].classList.contains("disabled")) {
-            // addName($(namePrompt.el).find("input")[0].value);
-            // if (!isIphone) { window.history.back(); }
-            $(namePrompt.el).find(".dialog-button")[1].click();
-          }
-        }
-      });
-      $(namePrompt.el).find("input")[0].addEventListener("input", function() {
-        var name = $(namePrompt.el).find("input")[0].value;
-        if (name.trim() == "" || users.includes(validateName(name))) {
-          $(namePrompt.el).find(".dialog-button")[1].classList.add("disabled");
-        } else {
-          $(namePrompt.el).find(".dialog-button")[1].classList.remove("disabled");
-        }
-      });
-      $(namePrompt.el).find("input")[0].dispatchEvent(new CustomEvent("input", {}));
+  });
 
-      pageAfterIn();
-    }
-  }
-});
+}
 
 $(".add-player-btn").on("click", function() {
   $(namePrompt.el).find("input")[0].value = "";
@@ -140,17 +143,9 @@ $(".start-game-btn").on("click", function() {
 function validateName(str) {
   var splitStr = str.toLowerCase().trim().replace(/[^a-zA-Z0-9 ]+/g, "").split(' ');
   for (var i = 0; i < splitStr.length; i++) {
-      // You do not need to check if i is larger than splitStr length, as your for does that for you
-      // Assign it back to the array
       splitStr[i] = splitStr[i].charAt(0).toUpperCase() + splitStr[i].substring(1);     
   }
   return splitStr.join(' '); 
-}
-
-if (isIphone) {
-  visualViewport.addEventListener('resize', (event) => {
-    document.body.style.maxHeight = event.target.height + "px";
-  });
 }
 
 function addName(name) {
@@ -208,138 +203,6 @@ function checkUsersCount() {
   }
 }
 
-/** BACK BUTTON STUFF */
-
-var finishedLoopingHashes = false;
-var backBtnPressed = false;
-var backBtnPressedBeforePageLoaded = false;
-var isPageLoading = false;
-var backdropEl = $(".sheet-backdrop")[0];
-var lastOpenedModal;
-var moreOptionsModal = app.sheet.create({
-  el: '.more-options-modal',
-  swipeToClose: true,
-  push: true,
-  backdrop: true,
-  on: {
-    open: function() {
-      pageBeforeIn();
-    },
-    opened: function() {
-      pageAfterIn();
-    }
-  }
-});
-
-$(document).on('sheet:open', function(e) {
-  lastOpenedModal = e.target;
-});
-
-$(backdropEl).on("click", function() {
-  if (lastOpenedModal == moreOptionsModal.el) {
-    if (moreOptionsModal.opened) {
-      pageBeforeIn();
-    } else {
-      if (!isIphone) { window.history.back(); }
-    }
-  }
-});
-
-function loopHash(x=1) {
-  if (x != 3) {
-    location.hash = "#" + x;
-    setTimeout(function() {
-      loopHash(x + 1);
-    }, 10);
-  } else {
-    finishedLoopingHashes = true;
-  }
-}
-
-if (!isIphone) {
-  loopHash();
-
-  let backBtnToast = app.toast.create({
-    text: 'Press back again to exit',
-    closeTimeout: 1500,
-  });
-  
-  
-  $(window).on('hashchange', function(e) {
-    if (finishedLoopingHashes) {
-      if (location.hash == "#1") {
-        backBtnToast.open();
-        setTimeout(function() {
-          if (!backBtnPressedBeforePageLoaded) {
-            location.hash = "#2";
-          }
-        }, 1500);
-      } else if (location.hash == "#3") {
-        if (e.oldURL.slice(-1) == "4" && !isPageLoading) {
-          if (!backBtnPressed) {
-            if (moreOptionsModal.opened) {
-              moreOptionsModal.close();
-            } else if (namePrompt.opened) {
-              namePrompt.close();
-            } else {
-              app.views.main.router.back();
-            }
-          }
-          window.history.back();
-        } else {
-          setTimeout(function() {
-            location.hash = "#4";
-          }, 50);
-        }
-      }
-    }
-
-    if (e.newURL.slice(-1) == hashHistory.at(-2) && e.oldURL.slice(-1) == hashHistory.at(-1)) {
-      hashHistory.pop();
-    } else {
-      hashHistory.push(e.newURL.slice(-1));
-    }
-  });
-}
-
-function backBtn() {
-  if (!isIphone) {
-    window.history.back();
-    backBtnPressed = true;
-    setTimeout(function() {
-      backBtnPressed = false;
-    }, 100);
-  }
-}
-
-function pageBeforeIn(e, page) {
-  pageBeforeIn();
-}
-
-function pageBeforeIn(timeToWait=1550) {
-  isPageLoading = true;
-  if (!isIphone) {
-    if (location.hash == "#1") {
-      backBtnPressedBeforePageLoaded = true;
-      location.hash = "#2";
-      setTimeout(function() {
-        location.hash = "#3";
-      }, 10);
-      setTimeout(function() {
-        backBtnPressedBeforePageLoaded = false;
-      }, timeToWait);
-    } else { location.hash = "#3"; }
-  }
-}
-
-function pageAfterIn(e, page) {
-  pageAfterIn();
-}
-
-function pageAfterIn() {
-  isPageLoading = false;
-}
-
 /** INIT GAME STUFF */
 
 function initGame() {
@@ -352,7 +215,7 @@ function initGame() {
   $(".home-nav-btn-cont")[0].style.display = "block";
   $(".leaderboard-nav-btn-cont")[0].style.display = "block";
   $(".more-options-nav-btn-cont")[0].style.display = "none";
-  $(".home-nav-title")[0].style.marginLeft = "0px";
+  $(".home-nav-title")[0].classList.remove("title-margin-left-8");
 }
 
 /** BACK TO HOME */
@@ -365,7 +228,7 @@ function goBackHome() {
   $(".home-nav-btn-cont")[0].style.display = "none";
   $(".leaderboard-nav-btn-cont")[0].style.display = "none";
   $(".more-options-nav-btn-cont")[0].style.display = "block";
-  $(".home-nav-title")[0].style.marginLeft = "8px";
+  $(".home-nav-title")[0].classList.add("title-margin-left-8");
   users = [];
 }
 
