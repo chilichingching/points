@@ -88,10 +88,42 @@
         <div class="swipe-handler"></div>
         <div class="page-content">
           <div class="block-title block-title-large">Hello!</div>
-          <div class="block">
-            <p>Eaque maiores ducimus, impedit unde culpa qui, explicabo accusamus, non vero corporis voluptatibus
-              similique odit ab. Quaerat quasi consectetur quidem libero? Repudiandae adipisci vel voluptatum, autem
-              libero minus dignissimos repellat.</p>
+          <!-- <div class="list list-dividers-ios">
+            <ul>
+              <li>
+                <div class="item-content">
+                  <div class="item-media"><i class="icon icon-f7"></i></div>
+                  <div class="item-inner">
+                    <div class="item-title">Points awarded if 0 hands predicted and </div>
+                    <div class="item-after">CEO</div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div> -->
+          <div class="block block-outline" style="display: flex; align-items: center; padding: 16px;">
+            <div style="flex-grow: 1;">
+              <p style="margin: 0px;">Number of points awarded if 0 hands predicted and 0 hands made</p>
+            </div>
+            <div class="stepper stepper-raised stepper-small stepper-fill stepper-init" style="margin-left: 16px;">
+              <div class="stepper-button-minus"></div>
+              <div class="stepper-input-wrap">
+                <input type="text" value="0" min="0" max="100" step="1" readonly />
+              </div>
+              <div class="stepper-button-plus"></div>
+            </div>
+          </div>
+          <div class="block block-outline" style="display: flex; align-items: center; padding: 16px;">
+            <div style="flex-grow: 1;">
+              <p style="margin: 0px;">Number of additional points awarded if predicted number of hands greater than 0 are made</p>
+            </div>
+            <div class="stepper stepper-raised stepper-small stepper-fill stepper-init" style="margin-left: 16px;">
+              <div class="stepper-button-minus"></div>
+              <div class="stepper-input-wrap">
+                <input type="text" value="0" min="0" max="100" step="1" readonly />
+              </div>
+              <div class="stepper-button-plus"></div>
+            </div>
           </div>
         </div>
       </div>
