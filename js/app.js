@@ -79,6 +79,13 @@ var namePromptAnimationEnded = false;
 
 function onDeviceReady() {
 
+  window.handleOpenURL = function(url) {
+    app.toast.create({
+      text: 'URL: ' + url,
+      closeTimeout: 2000,
+    }).open();
+  }
+
   app.sheet.create({
     el: '.more-options-modal',
     swipeToClose: true,
