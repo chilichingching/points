@@ -60,8 +60,8 @@ var app = new Framework7({
 function onLoad() {
   document.addEventListener("deviceready", onDeviceReady, false);
   if (app.device.cordova) {
-    universalLinks.subscribe('deep-link-game', deepLinkGame);
-    universalLinks.subscribe('deep-link-root', deepLinkRoot);
+    // universalLinks.subscribe('deep-link-game', deepLinkGame);
+    // universalLinks.subscribe('deep-link-root', deepLinkRoot);
   } else {
     onDeviceReady();
   }
@@ -78,8 +78,6 @@ var namePrompt;
 var namePromptAnimationEnded = false;
 
 function onDeviceReady() {
-
-  handleOpenUrl(cordova.plugins && cordova.plugins['deeplinks']);
 
   app.sheet.create({
     el: '.more-options-modal',
@@ -133,38 +131,46 @@ function onDeviceReady() {
 
 }
 
-function handleOpenUrl(deeplinks) {
-  if (deeplinks) {
-    deeplinks.route({
-      '/': function(match) {
-        app.toast.create({
-          text: 'Match1: ' + match,
-          closeTimeout: 2000,
-        }).open();
-      },
-      '/game': function(match) {
-        app.toast.create({
-          text: 'Match2: ' + match,
-          closeTimeout: 2000,
-        }).open();
-      }
-    });
+// function deepLinkGame(eventData) {
+//   app.toast.create({
+//     text: 'Game Hash: ' + eventData.hash,
+//     closeTimeout: 2000,
+//   }).open();
+// }
+
+// function deepLinkRoot(eventData) {
+//   app.toast.create({
+//     text: 'Path: ' + eventData.path,
+//     closeTimeout: 2000,
+//   }).open();
+// }
+
+var deepLinksHandler = {
+  initialize: function() {
+    this.bindEvents();
+  },
+  bindEvents: function() {
+    document.addEventListener('deviceready', deepLinksHandler.onDeviceReady, false);
+  },
+  onDeviceReady: function() {
+    universalLinks.subscribe('deep-link-game', deepLinksHandler.deepLinkGame);
+    universalLinks.subscribe('deep-link-root', deepLinksHandler.deepLinkRoot);
+  },
+  deepLinkGame: function(eventData) {
+    app.toast.create({
+      text: 'Game Hash: ' + eventData.hash,
+      closeTimeout: 2000,
+    }).open();
+  },
+  deepLinkRoot: function(eventData) {
+    app.toast.create({
+      text: 'Path: ' + eventData.path,
+      closeTimeout: 2000,
+    }).open();
   }
-}
-
-function deepLinkGame(eventData) {
-  app.toast.create({
-    text: 'Game Hash: ' + eventData.hash,
-    closeTimeout: 2000,
-  }).open();
-}
-
-function deepLinkRoot(eventData) {
-  app.toast.create({
-    text: 'Path: ' + eventData.path,
-    closeTimeout: 2000,
-  }).open();
-}
+};
+ 
+deepLinksHandler.initialize();
 
 $(".add-player-btn").on("click", function() {
   $(namePrompt.el).find("input")[0].value = "";
