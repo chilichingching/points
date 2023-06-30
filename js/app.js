@@ -59,7 +59,10 @@ var app = new Framework7({
 
 function onLoad() {
   document.addEventListener("deviceready", onDeviceReady, false);
-  if (!app.device.cordova) {
+  if (app.device.cordova) {
+    universalLinks.subscribe('deep-link-game', deepLinkGame);
+    universalLinks.subscribe('deep-link-root', deepLinkRoot);
+  } else {
     onDeviceReady();
   }
 };
@@ -75,7 +78,7 @@ var namePrompt;
 var namePromptAnimationEnded = false;
 
 function onDeviceReady() {
-  
+
   app.sheet.create({
     el: '.more-options-modal',
     swipeToClose: true,
@@ -126,6 +129,20 @@ function onDeviceReady() {
     }
   });
 
+}
+
+function deepLinkGame(eventData) {
+  $f7.toast.create({
+    text: 'Game Hash: ' + eventData.hash,
+    closeTimeout: 2000,
+  }).open();
+}
+
+function deepLinkRoot(eventData) {
+  $f7.toast.create({
+    text: 'Path: ' + eventData.path,
+    closeTimeout: 2000,
+  }).open();
 }
 
 $(".add-player-btn").on("click", function() {
