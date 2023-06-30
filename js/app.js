@@ -159,14 +159,26 @@ var deepLinksHandler = {
   deepLinkGame: function(eventData) {
     app.toast.create({
       text: 'Game Hash: ' + eventData.hash,
-      closeTimeout: 2000,
+      closeTimeout: 10000,
     }).open();
+    setTimeout(function() {
+      app.toast.create({
+        text: 'Game Hash: ' + eventData.hash,
+        closeTimeout: 10000,
+      }).open();
+    }, 11000);
   },
   deepLinkRoot: function(eventData) {
     app.toast.create({
       text: 'Path: ' + eventData.path,
-      closeTimeout: 2000,
+      closeTimeout: 10000,
     }).open();
+    setTimeout(function() {
+      app.toast.create({
+        text: 'Path: ' + eventData.path,
+        closeTimeout: 10000,
+      }).open();
+    }, 11000);
   }
 };
  
