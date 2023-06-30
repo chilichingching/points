@@ -132,14 +132,14 @@ function onDeviceReady() {
 }
 
 function deepLinkGame(eventData) {
-  $f7.toast.create({
+  app.toast.create({
     text: 'Game Hash: ' + eventData.hash,
     closeTimeout: 2000,
   }).open();
 }
 
 function deepLinkRoot(eventData) {
-  $f7.toast.create({
+  app.toast.create({
     text: 'Path: ' + eventData.path,
     closeTimeout: 2000,
   }).open();
