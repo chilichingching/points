@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission\/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.chiraggalaiya.points",
+      "sha256_cert_fingerprints": [
+        "E9:DC:B3:25:31:E7:CD:3D:43:F5:7A:E7:30:1C:F6:1B:91:20:6A:0B:75:20:67:D6:28:26:16:71:D5:59:A8:6C"
+      ]
+    }
+  }
+]
