@@ -79,12 +79,7 @@ var namePromptAnimationEnded = false;
 
 function onDeviceReady() {
 
-  window.handleOpenURL = function(url) {
-    app.toast.create({
-      text: 'URL: ' + url,
-      closeTimeout: 2000,
-    }).open();
-  }
+  handleOpenUrl(cordova.plugins && cordova.plugins['deeplinks']);
 
   app.sheet.create({
     el: '.more-options-modal',
@@ -136,6 +131,25 @@ function onDeviceReady() {
     }
   });
 
+}
+
+function handleOpenUrl(deeplinks) {
+  if (deeplinks) {
+    deeplinks.route({
+      '/': function(match) {
+        app.toast.create({
+          text: 'Match1: ' + match,
+          closeTimeout: 2000,
+        }).open();
+      },
+      '/game': function(match) {
+        app.toast.create({
+          text: 'Match2: ' + match,
+          closeTimeout: 2000,
+        }).open();
+      }
+    });
+  }
 }
 
 function deepLinkGame(eventData) {
