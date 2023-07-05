@@ -59,19 +59,16 @@ var app = new Framework7({
 
 function onLoad() {
   document.addEventListener("deviceready", onDeviceReady, false);
-  if (app.device.cordova) {
-    // universalLinks.subscribe('deep-link-game', deepLinkGame);
-    // universalLinks.subscribe('deep-link-root', deepLinkRoot);
-  } else {
+  if (!app.device.cordova) {
     onDeviceReady();
   }
 };
 
-if (isIphone) {
-  visualViewport.addEventListener('resize', (event) => {
-    document.body.style.maxHeight = event.target.height + "px";
-  });
-}
+// if (isIphone) {
+//   visualViewport.addEventListener('resize', (event) => {
+//     document.body.style.maxHeight = event.target.height + "px";
+//   });
+// }
 
 var users = [];
 var namePrompt;
