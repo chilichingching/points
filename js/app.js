@@ -96,27 +96,10 @@ var deepLinksHandler = {
 };
 deepLinksHandler.initialize();
 
-var backBtnToast = app.toast.create({
-  text: 'Tap back again to exit',
-  closeTimeout: 2000,
-});
-function backButtonPressed() {
-  if (backBtnToast.opened) {
-    if (navigator.app) {
-        navigator.app.exitApp();
-    } else if (navigator.device) {
-        navigator.device.exitApp();
-    } else {
-        window.close();
-    }
-  } else {
-    backBtnToast.open();
-  }
-}
-
 var users = [];
 var namePrompt;
 var namePromptAnimationEnded = false;
+var backBtnToast;
 
 function onDeviceReady() {
 
@@ -170,6 +153,25 @@ function onDeviceReady() {
     }
   });
 
+  backBtnToast = app.toast.create({
+    text: 'Tap back again to exit',
+    closeTimeout: 2000,
+  });
+
+}
+
+function backButtonPressed() {
+  // if (backBtnToast.opened) {
+  //   if (navigator.app) {
+  //       navigator.app.exitApp();
+  //   } else if (navigator.device) {
+  //       navigator.device.exitApp();
+  //   } else {
+  //       window.close();
+  //   }
+  // } else {
+  backBtnToast.open();
+  // }
 }
 
 $(".add-player-btn").on("click", function() {
