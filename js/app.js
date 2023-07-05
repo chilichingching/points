@@ -70,6 +70,33 @@ if (isIphone) {
   });
 }
 
+var deepLinksHandler = {
+  initialize: function() {
+    this.bindEvents();
+  },
+  bindEvents: function() {
+    document.addEventListener('deviceready', deepLinksHandler.onDeviceReady, false);
+  },
+  onDeviceReady: function() {
+    universalLinks.subscribe('deep-link-game', deepLinksHandler.deepLinkGame);
+    universalLinks.subscribe('deep-link-root', deepLinksHandler.deepLinkRoot);
+  },
+  deepLinkGame: function(eventData) {
+    app.toast.create({
+      text: 'Game Hash: ' + eventData.hash,
+      closeTimeout: 5000,
+    }).open();
+  },
+  deepLinkRoot: function(eventData) {
+    app.toast.create({
+      text: 'Path: ' + eventData.path,
+      closeTimeout: 5000,
+    }).open();
+  }
+};
+ 
+deepLinksHandler.initialize();
+
 var users = [];
 var namePrompt;
 var namePromptAnimationEnded = false;
@@ -127,47 +154,6 @@ function onDeviceReady() {
   });
 
 }
-
-// function deepLinkGame(eventData) {
-//   app.toast.create({
-//     text: 'Game Hash: ' + eventData.hash,
-//     closeTimeout: 2000,
-//   }).open();
-// }
-
-// function deepLinkRoot(eventData) {
-//   app.toast.create({
-//     text: 'Path: ' + eventData.path,
-//     closeTimeout: 2000,
-//   }).open();
-// }
-
-var deepLinksHandler = {
-  initialize: function() {
-    this.bindEvents();
-  },
-  bindEvents: function() {
-    document.addEventListener('deviceready', deepLinksHandler.onDeviceReady, false);
-  },
-  onDeviceReady: function() {
-    universalLinks.subscribe('deep-link-game', deepLinksHandler.deepLinkGame);
-    universalLinks.subscribe('deep-link-root', deepLinksHandler.deepLinkRoot);
-  },
-  deepLinkGame: function(eventData) {
-    app.toast.create({
-      text: 'Game Hash: ' + eventData.hash,
-      closeTimeout: 5000,
-    }).open();
-  },
-  deepLinkRoot: function(eventData) {
-    app.toast.create({
-      text: 'Path: ' + eventData.path,
-      closeTimeout: 5000,
-    }).open();
-  }
-};
- 
-deepLinksHandler.initialize();
 
 $(".add-player-btn").on("click", function() {
   $(namePrompt.el).find("input")[0].value = "";
@@ -281,3 +267,10 @@ function goBackHome() {
 $(".home-nav-btn").click(function() {
   goBackHome();
 });
+
+function backButtonPressed() {
+  app.toast.create({
+    text: 'Tap back again to exit',
+    closeTimeout: 2000,
+  }).open();
+}

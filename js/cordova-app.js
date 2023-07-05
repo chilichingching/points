@@ -85,6 +85,8 @@ var cordovaApp = {
           e.preventDefault();
           return false;
         }
+
+        backButtonPressed();
       },
       false,
     );
