@@ -64,11 +64,11 @@ function onLoad() {
   }
 };
 
-// if (isIphone) {
-//   visualViewport.addEventListener('resize', (event) => {
-//     document.body.style.maxHeight = event.target.height + "px";
-//   });
-// }
+if (isIphone) {
+  visualViewport.addEventListener('resize', (event) => {
+    document.body.style.maxHeight = event.target.height + "px";
+  });
+}
 
 var users = [];
 var namePrompt;
