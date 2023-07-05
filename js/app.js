@@ -161,17 +161,17 @@ function onDeviceReady() {
 }
 
 function backButtonPressed() {
-  // if (backBtnToast.opened) {
-  //   if (navigator.app) {
-  //       navigator.app.exitApp();
-  //   } else if (navigator.device) {
-  //       navigator.device.exitApp();
-  //   } else {
-  //       window.close();
-  //   }
-  // } else {
-  backBtnToast.open();
-  // }
+  if (backBtnToast.opened) {
+    if (navigator.app) {
+        navigator.app.exitApp();
+    } else if (navigator.device) {
+        navigator.device.exitApp();
+    } else {
+        window.close();
+    }
+  } else {
+    backBtnToast.open();
+  }
 }
 
 $(".add-player-btn").on("click", function() {
